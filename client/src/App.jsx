@@ -31,7 +31,9 @@ function InternshipList() {
     <main className="page">
       <section className="hero">
         <span className="eyebrow">YOUR CAREER STARTS HERE</span>
-        <h1>Find your next <span>opportunity.</span></h1>
+        <h1>
+          Find your next <span>opportunity.</span>
+        </h1>
         <p>
           Explore internships, build practical skills, and take the
           first step toward your future career.
@@ -47,7 +49,9 @@ function InternshipList() {
             <span className="eyebrow">CURATED FOR YOU</span>
             <h2>Explore internships</h2>
           </div>
-          <span className="count">{internships.length} opportunities</span>
+          <span className="count">
+            {internships.length} opportunities
+          </span>
         </div>
 
         {loading && <p>Loading internships...</p>}
@@ -156,10 +160,14 @@ function InternshipDetails() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || 'Application submission failed.');
+        throw new Error(
+          result.error || 'Application submission failed.'
+        );
       }
 
-      setMessage(result.message || 'Application submitted successfully!');
+      setMessage(
+        result.message || 'Application submitted successfully!'
+      );
       setApplicationId(result.application?._id || '');
       form.reset();
     } catch (err) {
@@ -171,12 +179,23 @@ function InternshipDetails() {
     }
   }
 
-  if (loading) return <main className="page"><p>Loading details...</p></main>;
+  if (loading) {
+    return (
+      <main className="page">
+        <p>Loading details...</p>
+      </main>
+    );
+  }
+
   if (error || !internship) {
     return (
       <main className="page">
-        <p className="error">{error || 'Internship not found.'}</p>
-        <Link to="/" className="text-link">← Back to internships</Link>
+        <p className="error">
+          {error || 'Internship not found.'}
+        </p>
+        <Link to="/" className="text-link">
+          ← Back to internships
+        </Link>
       </main>
     );
   }
@@ -184,24 +203,39 @@ function InternshipDetails() {
   return (
     <main className="page details-layout">
       <section className="details-panel">
-        <Link to="/" className="text-link">← All internships</Link>
+        <Link to="/" className="text-link">
+          ← All internships
+        </Link>
+
         <div className="company-icon large">
           {internship.company.charAt(0)}
         </div>
+
         <span className="eyebrow">{internship.company}</span>
         <h1>{internship.title}</h1>
         <p className="description">{internship.description}</p>
 
         <div className="detail-facts">
-          <div><small>Location</small><strong>{internship.location}</strong></div>
-          <div><small>Duration</small><strong>{internship.duration}</strong></div>
-          <div><small>Stipend</small><strong>{internship.stipend}</strong></div>
+          <div>
+            <small>Location</small>
+            <strong>{internship.location}</strong>
+          </div>
+          <div>
+            <small>Duration</small>
+            <strong>{internship.duration}</strong>
+          </div>
+          <div>
+            <small>Stipend</small>
+            <strong>{internship.stipend}</strong>
+          </div>
         </div>
 
         <h3>Skills you'll work with</h3>
         <div className="skills">
           {internship.skills.map((skill) => (
-            <span className="skill" key={skill}>{skill}</span>
+            <span className="skill" key={skill}>
+              {skill}
+            </span>
           ))}
         </div>
       </section>
@@ -209,7 +243,9 @@ function InternshipDetails() {
       <section className="form-panel">
         <span className="eyebrow">TAKE THE NEXT STEP</span>
         <h2>Apply for this internship</h2>
-        <p className="muted">Fill in your details to submit your application.</p>
+        <p className="muted">
+          Fill in your details to submit your application.
+        </p>
 
         <form onSubmit={handleSubmit}>
           <label htmlFor="studentName">Full name</label>
@@ -244,9 +280,12 @@ function InternshipDetails() {
             required
           />
 
-          <label htmlFor="internshipName">Selected internship</label>
+          <label htmlFor="internshipName">
+            Selected internship
+          </label>
           <input
             id="internshipName"
+            name="internshipName"
             value={internship.title}
             readOnly
           />
@@ -256,14 +295,21 @@ function InternshipDetails() {
             type="submit"
             disabled={submitting}
           >
-            {submitting ? 'Submitting...' : 'Submit application →'}
+            {submitting
+              ? 'Submitting...'
+              : 'Submit application →'}
           </button>
         </form>
 
         {message && (
-          <div className={applicationId ? 'success' : 'notice'} role="status">
+          <div
+            className={applicationId ? 'success' : 'notice'}
+            role="status"
+          >
             {message}
-            {applicationId && <p>Application ID: {applicationId}</p>}
+            {applicationId && (
+              <p>Application ID: {applicationId}</p>
+            )}
           </div>
         )}
       </section>
@@ -282,7 +328,10 @@ function Applications() {
 
     try {
       const response = await fetch(`${API_URL}/api/applications`);
-      if (!response.ok) throw new Error('Unable to load applications.');
+
+      if (!response.ok) {
+        throw new Error('Unable to load applications.');
+      }
 
       const data = await response.json();
       setApplications(data);
@@ -304,9 +353,15 @@ function Applications() {
           <div>
             <span className="eyebrow">APPLICATION TRACKER</span>
             <h1>Submitted applications</h1>
-            <p className="muted">Review applications saved in the database.</p>
+            <p className="muted">
+              Review applications saved in the database.
+            </p>
           </div>
-          <button className="button secondary" onClick={loadApplications}>
+
+          <button
+            className="button secondary"
+            onClick={loadApplications}
+          >
             Refresh
           </button>
         </div>
@@ -317,8 +372,12 @@ function Applications() {
         {!loading && !error && applications.length === 0 && (
           <div className="empty-state">
             <h3>No applications yet</h3>
-            <p>Explore internships and submit your first application.</p>
-            <Link to="/" className="button primary">Explore internships</Link>
+            <p>
+              Explore internships and submit your first application.
+            </p>
+            <Link to="/" className="button primary">
+              Explore internships
+            </Link>
           </div>
         )}
 
@@ -334,6 +393,7 @@ function Applications() {
                   <th>Applied on</th>
                 </tr>
               </thead>
+
               <tbody>
                 {applications.map((application) => (
                   <tr key={application._id}>
@@ -343,7 +403,9 @@ function Applications() {
                     <td>{application.internshipTitle}</td>
                     <td>
                       {application.createdAt
-                        ? new Date(application.createdAt).toLocaleDateString()
+                        ? new Date(
+                            application.createdAt
+                          ).toLocaleDateString()
                         : '—'}
                     </td>
                   </tr>
@@ -361,7 +423,9 @@ function NotFound() {
   return (
     <main className="page empty-state">
       <h1>Page not found</h1>
-      <Link to="/" className="button primary">Back to home</Link>
+      <Link to="/" className="button primary">
+        Back to home
+      </Link>
     </main>
   );
 }
@@ -373,7 +437,7 @@ function Portal() {
         <div className="header-inner">
           <Link to="/" className="brand">
             <span className="brand-mark">S</span>
-            <span>Intern<span className="brand-accent">Sphere</span></span>
+            <span>Student Internship Portal</span>
           </Link>
 
           <nav>
@@ -381,13 +445,18 @@ function Portal() {
             <Link to="/applications">Applications</Link>
           </nav>
 
-          <a href="#internships" className="header-cta">Find an internship ↗</a>
+          <a href="#internships" className="header-cta">
+            Find an internship ↗
+          </a>
         </div>
       </header>
 
       <Routes>
         <Route path="/" element={<InternshipList />} />
-        <Route path="/internships/:id" element={<InternshipDetails />} />
+        <Route
+          path="/internships/:id"
+          element={<InternshipDetails />}
+        />
         <Route path="/applications" element={<Applications />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -395,8 +464,9 @@ function Portal() {
       <footer className="site-footer">
         <Link to="/" className="brand">
           <span className="brand-mark">S</span>
-          <span>Intern<span className="brand-accent">Sphere</span></span>
+          <span>Student Internship Portal</span>
         </Link>
+
         <p>Connecting students with opportunities to grow.</p>
       </footer>
     </>
